@@ -56,7 +56,7 @@ app.get('/checkout-basic', async (req, res) => {
         proration_behavior: 'create_prorations',
       },
       success_url: 'https://webfire-marketing.com',
-      cancel_url: 'https://webfire-marketing.com',
+      cancel_url: 'https://webfire-marketing.com/?checkout_cancelled=1',
     });
 
     res.redirect(session.url);
