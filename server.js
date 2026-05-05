@@ -25,10 +25,18 @@ app.get('/checkout-standard', async (req, res) => {
         },
       ],
       payment_method_types: ['card', 'sepa_debit'],
+
+      automatic_tax: {
+        enabled: true,
+      },
+      billing_address_collection: 'required',
+      customer_creation: 'always',
+
       subscription_data: {
         billing_cycle_anchor: getBillingAnchor(),
         proration_behavior: 'create_prorations',
       },
+
       success_url: 'https://webfire-marketing.com',
       cancel_url: 'https://webfire-marketing.com/?checkout_cancelled=1',
     });
@@ -51,10 +59,18 @@ app.get('/checkout-basic', async (req, res) => {
         },
       ],
       payment_method_types: ['card', 'sepa_debit'],
+
+      automatic_tax: {
+        enabled: true,
+      },
+      billing_address_collection: 'required',
+      customer_creation: 'always',
+
       subscription_data: {
         billing_cycle_anchor: getBillingAnchor(),
         proration_behavior: 'create_prorations',
       },
+
       success_url: 'https://webfire-marketing.com',
       cancel_url: 'https://webfire-marketing.com/?checkout_cancelled=1',
     });
