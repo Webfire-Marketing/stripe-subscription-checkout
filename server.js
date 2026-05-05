@@ -30,7 +30,6 @@ app.get('/checkout-standard', async (req, res) => {
         enabled: true,
       },
       billing_address_collection: 'required',
-      customer_creation: 'always',
 
       subscription_data: {
         billing_cycle_anchor: getBillingAnchor(),
@@ -64,7 +63,6 @@ app.get('/checkout-basic', async (req, res) => {
         enabled: true,
       },
       billing_address_collection: 'required',
-      customer_creation: 'always',
 
       subscription_data: {
         billing_cycle_anchor: getBillingAnchor(),
