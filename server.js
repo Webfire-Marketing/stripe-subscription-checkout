@@ -113,6 +113,11 @@ app.get('/checkout-standard', async (req, res) => {
 
       billing_address_collection: 'required',
 
+      tax_id_collection: {
+        enabled: true,
+        required: 'if_supported',
+      },
+
       subscription_data: {
         billing_cycle_anchor: getBillingAnchor(),
         proration_behavior: 'create_prorations',
@@ -148,6 +153,11 @@ app.get('/checkout-basic', async (req, res) => {
       },
 
       billing_address_collection: 'required',
+
+      tax_id_collection: {
+        enabled: true,
+        required: 'if_supported',
+      },
 
       subscription_data: {
         billing_cycle_anchor: getBillingAnchor(),
