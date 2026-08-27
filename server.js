@@ -115,7 +115,6 @@ app.get('/checkout-standard', async (req, res) => {
 
       tax_id_collection: {
         enabled: true,
-        required: 'if_supported',
       },
 
       subscription_data: {
@@ -156,7 +155,6 @@ app.get('/checkout-basic', async (req, res) => {
 
       tax_id_collection: {
         enabled: true,
-        required: 'if_supported',
       },
 
       subscription_data: {
