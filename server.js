@@ -76,6 +76,26 @@ app.post('/webhook', express.raw({ type: 'application/json' }), async (req, res)
  */
 app.use(express.json());
 
+/**
+ * Lead-Zuordnung (30.09.2026): Das CRM haengt ?crm=<Lead-ID>&email=<Mail> an den Link.
+ * Wir reichen beides an Stripe weiter, damit der Kundenapp-Webhook die Zahlung dem
+ * richtigen Lead zuordnen kann (client_reference_id) und der Kunde seine Mail nicht
+ * abtippen muss (customer_email).
+ */
+function leadParams(req) {
+  const out = {};
+  const crm = String(req.query.crm || '').replace(/[^A-Za-z0-9_-]/g, '').slice(0, 64);
+  if (crm) {
+    out.client_reference_id = crm;
+    out.metadata = { crm_id: crm };
+  }
+  const email = String(req.query.email || '').trim();
+  if (email && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) && email.length <= 190) {
+    out.customer_email = email;
+  }
+  return out;
+}
+
 function getBillingAnchor() {
   const now = new Date();
 
@@ -96,6 +116,7 @@ app.get('/', (req, res) => {
 app.get('/checkout-standard', async (req, res) => {
   try {
     const session = await stripe.checkout.sessions.create({
+      ...leadParams(req),
       mode: 'subscription',
 
       line_items: [
@@ -136,6 +157,7 @@ app.get('/checkout-standard', async (req, res) => {
 app.get('/checkout-basic', async (req, res) => {
   try {
     const session = await stripe.checkout.sessions.create({
+      ...leadParams(req),
       mode: 'subscription',
 
       line_items: [
